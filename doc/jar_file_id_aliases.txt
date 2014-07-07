@@ -1,7 +1,22 @@
-Aliases working in two ways:
+Sometimes it may be necessary to make one artifact available under
+different artifact paths or under different artifact coordinates.  For
+example if artifact identification changes at upstream, it may be
+necessary to keep the old coordinates working until all dependant
+packages are updated to use the new coordinates.  Such additional
+artifact paths or artifact coordinates under which artifacts are
+available are called _aliases_.
 
-* Symlinks for paths
-* Additional mappings for artifact specifications
+The way of creating artifact aliases depends on the kind of
+identification that alias will constitute.  For path aliases it is as
+simple as creating a symbolic link and installing it in the right
+location.  Aliases in form of artifact coordinates are created by
+adding a special entry in Javapackages metadata - there are special
+RPM macros that allow easy creation of such aliases.
 
-WORK IN PROGRESS
-mizdebsk, 31 Oct 2013
+In general artifact aliases should be the preferred way of handling
+existence of multiple artifact identifiers - patching each package
+using renamed artifact is a lot of work compared to adding a single
+line macro to create an alias in package providing the renamed
+artifact.  However there are cases in which patching may be better,
+for example when the patch has good chances of being upstreamed or
+when there is only a single package requiring the alias.
