@@ -1,5 +1,39 @@
-Handling of compatibility packages, versioned jars etc.
+While providing a single (latest) version of each artifact in the
+system is the best practice and ultimate goal when packaging Java for
+GNU/Linux, sometimes there is a need to temporarly provide additional
+artifact versions (older, _compatibility verison_).  This usually
+happens when a popular library is updated to newer version with
+incompatible API and the cost of patching all dependant packages is to
+high to be done during the update.
 
-WORK IN PROGRESS
-mizdebsk, 31 Oct 2013
+Multiple artifact versions are subject to certain rules:
 
+  * SYSTEM is a special notation for default artifact version used in
+    the system,
+
+  * each artifact has at most one (zero or one) SYSTEM version any
+    number (zero or more) of other (compat, non-SYSTEM) versions,
+
+  * different artifact versions are usually provided by different
+    packages, but this is not mandatory,
+
+  * artifact paths for non-SYSTEM artifacts end with version suffix
+    (in form of `-verison` added just before file extension) while
+    artifact paths for SYSTEM artifacts don't contain version,
+
+  * artifact version used in artifact coordinates is stored in
+    Javapackages metadata,
+
+  * artifact resolution is performed in the following way:
+
+   - if requested artifact version matches exactly one of compat
+     versions then this version is returned,
+
+   - otherwise if SYSTEM version of the artifact exists then is
+     returned,
+
+   - otherwise resolution ends with an error.
+
+At first this scheme may may seem complex, but it greatly simplifies
+packaging of older software versions as well as eases package updates
+to newer versions.
