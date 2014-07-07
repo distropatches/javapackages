@@ -20,7 +20,10 @@ This document is developed as part of Javapackages community project,
 which welcomes new contributors.  Requests and comments related to
 this document should be
 http://bugzilla.redhat.com/enter_bug.cgi?product=fedora&component=javapackages-tools[reported]
-at https://bugzilla.redhat.com/[Red Hat Bugzilla].
+at https://bugzilla.redhat.com/[Red Hat Bugzilla].  There is also a
+possibility to submit contributions by opening pull requests at
+https://github.com/mizdebsk/javapackages[Javapackages unofficial
+Github mirror].
 
 Before contributing please read the
 https://git.fedorahosted.org/cgit/javapackages.git/plain/doc/README[README
