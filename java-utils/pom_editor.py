@@ -6,7 +6,6 @@ import re
 import shutil
 import sys
 import optparse
-import six
 import io
 
 from lxml import etree
@@ -51,14 +50,14 @@ def MetaArtifact(specification, attributes=False, namespace=None, **defaults):
             return cls(**values)
 
         def update(self, artifact):
-            for key, value in six.iteritems(artifact.values):
+            for key, value in artifact.values.iteritems():
                 if key not in parts:
                     raise KeyError(key + ' not defined')
                 if value:
                     self[key] = value
 
         def remove_items(self, fn):
-            for prop, val in six.iteritems(dict(self.values)):
+            for prop, val in dict(self.values).iteritems():
                 if fn(val):
                     del self.values[prop]
 
@@ -107,7 +106,7 @@ def MetaArtifact(specification, attributes=False, namespace=None, **defaults):
         @classmethod
         def from_xml(cls, element):
             values = dict([(key, val) for key, val
-                          in six.iteritems(element.attrib) if key in parts])
+                          in element.attrib.iteritems() if key in parts])
             return cls(**values)
 
         def get_xml(self, node='artifact', extra=''):
@@ -327,7 +326,7 @@ class XmlFile(object):
             children = node.xpath(elem, namespaces=self.NSMAP)
             if not children:
                 name = elements[0]
-                for ns, url in six.iteritems(self.NSMAP):
+                for ns, url in self.NSMAP.iteritems():
                     ns_token = ns + ':'
                     url_token = '{' + url + '}'
                     name = name.replace(ns_token, url_token)

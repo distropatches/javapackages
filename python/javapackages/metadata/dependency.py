@@ -4,7 +4,6 @@ from javapackages.metadata.exclusion import MetadataExclusion
 import javapackages.metadata.pyxbmetadata as m
 
 import pyxb
-import six
 
 
 class MetadataDependency(object):
@@ -77,7 +76,7 @@ class MetadataDependency(object):
         return d
 
     def __unicode__(self):
-        return six.text_type(self.get_mvn_str())
+        return unicode(self.get_mvn_str())
 
     def __str__(self):
         return self.__unicode__()

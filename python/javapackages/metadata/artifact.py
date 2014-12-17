@@ -8,7 +8,6 @@ from javapackages.metadata.alias import MetadataAlias
 from javapackages.metadata.dependency import MetadataDependency
 import javapackages.metadata.pyxbmetadata as m
 
-import six
 import pyxb
 import os
 import logging
@@ -100,7 +99,7 @@ class MetadataArtifact(object):
         return "\n".join(result)
 
     def __unicode__(self):
-        return six.text_type(self.get_mvn_str())
+        return unicode(self.get_mvn_str())
 
     def __str__(self):
         return self.__unicode__()
@@ -150,7 +149,7 @@ class MetadataArtifact(object):
             a.aliases = pyxb.BIND(*als)
 
         if self.properties:
-            props = [self._create_property(k, v) for k, v in six.iteritems(self.properties)]
+            props = [self._create_property(k, v) for k, v in self.properties.iteritems()]
             a.properties = pyxb.BIND(*props)
         return a
 

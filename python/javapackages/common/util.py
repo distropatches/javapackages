@@ -34,7 +34,6 @@
 import os
 import signal
 import sys
-import six
 import subprocess
 import logging
 from javapackages.common.pypath import _parse_argv
@@ -52,9 +51,8 @@ def kill_parent_process():
 
 
 def args_to_unicode(args):
-    if six.PY2:
-        for index, arg in enumerate(args):
-            args[index] = arg.decode(sys.getfilesystemencoding())
+    for index, arg in enumerate(args):
+        args[index] = arg.decode(sys.getfilesystemencoding())
     return args
 
 

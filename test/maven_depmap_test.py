@@ -1,6 +1,5 @@
 import inspect
 from zipfile import ZipFile
-import six
 import os
 import unittest
 import shutil
@@ -66,9 +65,9 @@ class TestMavenDepmap(unittest.TestCase):
             mf_file = archive.open(filename)
             try:
                 if (keep_comments):
-                    res[six.text_type(filename)] = mf_file.readlines()
+                    res[unicode(filename)] = mf_file.readlines()
                 else:
-                    res[six.text_type(filename)] = \
+                    res[unicode(filename)] = \
                             [line for line in mf_file.readlines()
                                     if not line.startswith(b'#')]
             finally:

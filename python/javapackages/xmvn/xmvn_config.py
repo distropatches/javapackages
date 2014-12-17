@@ -34,8 +34,7 @@ import codecs
 import errno
 import os
 import re
-import six
-from six import BytesIO
+from StringIO import StringIO
 
 from javapackages.maven.artifact import ArtifactValidationException
 from lxml.etree import ElementTree, Element, SubElement
@@ -92,7 +91,7 @@ class XMvnConfig(object):
     def __init_xml(self, content=""):
         self.__write_index()
 
-        xmlbuf = BytesIO()
+        xmlbuf = StringIO()
         xmlbuf.write(self.templateXML.format(content=content).encode("UTF-8"))
 
         root = ET.fromstring(xmlbuf.getvalue())
@@ -102,7 +101,7 @@ class XMvnConfig(object):
         return root
 
     def __prettify_element(self, elem):
-        xmlbuf = BytesIO()
+        xmlbuf = StringIO()
         et = ElementTree()
         et._setroot(elem)
         et.write(xmlbuf,
@@ -130,7 +129,7 @@ class XMvnConfig(object):
         if level3:
             cont_level = SubElement(level2, level3)
 
-        if isinstance(content, six.string_types):
+        if isinstance(content, basestring):
             cont_level.text = content
         elif isinstance(content, list):
             for elem in content:
