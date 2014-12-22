@@ -232,7 +232,7 @@ class TagBuilder(object):
 
     def _get_config(self):
         new_config = {}
-        configs = get_configs(['%{javaconfdir}'])
+        configs = get_configs(['%{javaconfdir}'], scl=rpmconf.scl)
         for config_file in configs:
             config = config_file.get('maven.req', {})
             filters = set(new_config.get('filter_requires', ()))

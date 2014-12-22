@@ -33,16 +33,21 @@
 
 import os
 import json
+import subprocess
 
 metadata_cache_f = "metadata.cache"
 osgi_cache_f = "osgi.cache"
 
 
-def get_configs(cfg_paths=None):
+def get_configs(cfg_paths=None, scl=None):
     """
     Returns list of dictionaries which represent configuration files.
     """
-    if 'JAVACONFDIRS' in os.environ:
+
+    if scl:
+        config_paths = subprocess.check_output(['scl', 'enable', scl,
+                                                'echo -n $JAVACONFDIRS'])
+    elif 'JAVACONFDIRS' in os.environ:
         config_paths = os.environ['JAVACONFDIRS'].split(os.pathsep)
     elif cfg_paths:
         config_paths = cfg_paths
