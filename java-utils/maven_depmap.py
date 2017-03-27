@@ -39,6 +39,7 @@
 from optparse import OptionParser
 import os
 import shutil
+import subprocess
 import sys
 
 from os.path import basename, dirname
@@ -73,6 +74,10 @@ class MissingJarFile(JavaPackagesToolsException):
 class UnknownFileExtension(JavaPackagesToolsException):
     def __init__(self, jar_path):
         self.args=("Unknown file extension: %s" % (jar_path),)
+
+class StripNondeterminismFailed(JavaPackagesToolsException):
+    def __init__(self, jar_path):
+        self.args=("Failed strip-nondeterminism %s" % (jar_path),)
 
 
 def _print_path_with_dirs(path, base):
@@ -294,6 +299,11 @@ def _main():
         # output file path for file list (if it's not versioned)
         if not add_versions:
             _print_path_with_dirs(jar_path, jar_base)
+        try:
+            if subprocess.call(["strip-nondeterminism", jar_path]):
+                raise StripNondeterminismFailed(jar_path)
+        except OSError as e:
+            pass
     if have_pom:
         metadata_pom_path = os.path.abspath(pom_path)
         artifact.path = metadata_pom_path.replace(buildroot, "") if buildroot else metadata_pom_path
